@@ -1,0 +1,109 @@
+.manager-search-form {
+  background: white;
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.manager-search-form__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.manager-search-form__title {
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.manager-search-form__logout {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--danger-color);
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+
+.manager-search-form__logout:hover {
+  background: var(--danger-dark);
+}
+
+.manager-search-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.manager-search-form__field {
+  flex: 1;
+}
+
+.manager-search-form__label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-primary);
+}
+
+.manager-search-form__input {
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  text-transform: uppercase;
+  transition: border-color var(--transition-base);
+}
+
+.manager-search-form__input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.manager-search-form__input:disabled {
+  background: var(--gray-100);
+}
+
+.manager-search-form__error {
+  color: var(--danger-color);
+  font-size: 0.9rem;
+  margin-top: var(--spacing-sm);
+}
+
+.manager-search-form__button {
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background: var(--primary-color);
+  border-radius: var(--radius-md);
+}
+
+.manager-search-form__button:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.manager-search-form__button:disabled {
+  background: var(--gray-400);
+}
+
+@media (min-width: 768px) {
+  .manager-search-form__form {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+  
+  .manager-search-form__button {
+    flex-shrink: 0;
+  }
+}

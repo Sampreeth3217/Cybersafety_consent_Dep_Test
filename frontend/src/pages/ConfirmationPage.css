@@ -1,0 +1,336 @@
+.confirmation-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f7fa;
+}
+
+.confirmation-page--loading {
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmation-page__header-bar {
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8a 100%);
+  padding: 1.25rem 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.confirmation-page__header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.confirmation-page__logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.confirmation-page__logo-icon {
+  width: 48px;
+  height: 48px;
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-page__logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.confirmation-page__logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.confirmation-page__logo-title {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.confirmation-page__logo-subtitle {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+}
+
+.confirmation-page__main {
+  flex: 1;
+  padding: 2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirmation-page__container {
+  max-width: 700px;
+  width: 100%;
+}
+
+.confirmation-page__success-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.confirmation-page__success-icon {
+  width: 80px;
+  height: 80px;
+  background: #10b981;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  margin: 0 auto 1.5rem;
+  animation: scaleIn 0.5s ease-out;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+}
+
+.confirmation-page__title {
+  color: #1e3a5f;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.confirmation-page__message {
+  font-size: 1.05rem;
+  color: #6c757d;
+  margin: 0;
+}
+
+.confirmation-page__token-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.confirmation-page__instruction {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+}
+
+.confirmation-page__token-box {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 2px solid #1e3a5f;
+}
+
+.confirmation-page__token-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6c757d;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.confirmation-page__token-display {
+  margin-bottom: 1rem;
+}
+
+.confirmation-page__token {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: #1e3a5f;
+  font-family: 'Courier New', monospace;
+  display: block;
+}
+
+.confirmation-page__copy-button {
+  padding: 0.75rem 2rem;
+  background: #1e3a5f;
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 300px;
+}
+
+.confirmation-page__copy-button:hover {
+  background: #2d5a8a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+}
+
+.confirmation-page__info {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.confirmation-page__info-box {
+  background: white;
+  padding: 1.25rem;
+  border-radius: 12px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.confirmation-page__info-title {
+  font-size: 1.05rem;
+  color: #1e3a5f;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.confirmation-page__info-text {
+  font-size: 0.95rem;
+  color: #6c757d;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.confirmation-page__new-button {
+  padding: 0.875rem 2rem;
+  background: white;
+  color: #1e3a5f;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.confirmation-page__new-button:hover {
+  background: #f8f9fa;
+  border-color: #1e3a5f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-page__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.confirmation-page__loading p {
+  font-size: 1.1rem;
+  color: #495057;
+  font-weight: 500;
+}
+
+.confirmation-page__spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid #e9ecef;
+  border-top-color: #1e3a5f;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.confirmation-page__footer {
+  background: #1e3a5f;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.875rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .confirmation-page__logo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .confirmation-page__logo-title {
+    font-size: 0.95rem;
+  }
+  
+  .confirmation-page__logo-subtitle {
+    font-size: 0.7rem;
+  }
+  
+  .confirmation-page__main {
+    padding: 1.5rem 1rem;
+  }
+  
+  .confirmation-page__token {
+    font-size: 2rem;
+    letter-spacing: 4px;
+  }
+  
+  .confirmation-page__success-card,
+  .confirmation-page__token-card,
+  .confirmation-page__info-box {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .confirmation-page__header-bar {
+    padding: 1rem;
+  }
+  
+  .confirmation-page__logo-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .confirmation-page__token {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+  
+  .confirmation-page__title {
+    font-size: 1.5rem;
+  }
+  
+  .confirmation-page__success-icon {
+    width: 64px;
+    height: 64px;
+    font-size: 2.5rem;
+  }
+}
