@@ -5,10 +5,27 @@ import { validateToken, validateName, validateLanguage, sanitizeInput } from '..
 const router = express.Router();
 
 /**
+ * GET /api/consent
+ * Test endpoint for consent route
+ */
+router.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Consent API endpoint is working',
+    methods: ['POST /api/consent - Submit consent record']
+  });
+});
+
+/**
  * POST /api/consent
  * Create a new consent record
  */
 router.post('/', async (req, res) => {
+  // Ensure CORS headers are set
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
   try {
     const { name, token, language } = req.body;
 

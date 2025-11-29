@@ -1,5 +1,5 @@
 .manager-search-form {
-  background: white;
+  background: var(--accent-color);
   padding: var(--spacing-xl);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);

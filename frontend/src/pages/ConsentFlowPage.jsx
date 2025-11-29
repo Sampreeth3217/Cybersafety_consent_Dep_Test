@@ -140,11 +140,11 @@ const ConsentFlowPage = () => {
         <div className="consent-flow-page__header-content">
           <div className="consent-flow-page__logo">
             <div className="consent-flow-page__logo-icon">
-              <img src="/ap-police-logo.png" alt="AP Police Logo" />
+              <img src="/CyberSurakshaLogo.png" alt="AP Police Logo" />
             </div>
             <div className="consent-flow-page__logo-text">
-              <div className="consent-flow-page__logo-title">Cybercrime Department, NTR</div>
-              <div className="consent-flow-page__logo-subtitle">CUSTOMER CYBERSAFETY VERIFICATION SYSTEM</div>
+              <div className="consent-flow-page__logo-title">NTR Police Commissionerate, Vijayawada, Andhra Pradesh</div>
+              <div className="confirmation-page__logo-subtitle">CYBERSURAKSHA - CUSTOMER CYBERSAFETY VERIFICATION SYSTEM</div>
             </div>
           </div>
         </div>
@@ -202,7 +202,7 @@ const ConsentFlowPage = () => {
       </div>
 
       <footer className="consent-flow-page__footer">
-        <p>© 2025 AP Cybercrime Department of Police — Customer Safety Verification System</p>
+        <p>© 2025 NTR Police Commissionerate, Vijayawada, Andhra Pradesh, India — CYBERSURAKSHA </p>
       </footer>
     </div>
   );

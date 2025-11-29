@@ -61,14 +61,14 @@ apiClient.interceptors.response.use(
  * Submit consent record
  */
 export const submitConsent = async (data) => {
-  return apiClient.post('/consent', data);
+  return apiClient.post('/api/consent', data);
 };
 
 /**
  * Manager login
  */
 export const managerLogin = async (credentials) => {
-  const response = await apiClient.post('/manager/login', credentials);
+  const response = await apiClient.post('/api/manager/login', credentials);
   if (response.success && response.token) {
     localStorage.setItem('managerToken', response.token);
   }
@@ -94,7 +94,7 @@ export const isManagerAuthenticated = () => {
  */
 export const verifyManagerToken = async () => {
   try {
-    return await apiClient.get('/manager/verify');
+    return await apiClient.get('/api/manager/verify');
   } catch (error) {
     managerLogout();
     throw error;
@@ -105,7 +105,7 @@ export const verifyManagerToken = async () => {
  * Search consent record by token
  */
 export const searchConsentByToken = async (token) => {
-  return apiClient.get(`/manager/consent/${token}`);
+  return apiClient.get(`/api/manager/consent/${token}`);
 };
 
 export default apiClient;

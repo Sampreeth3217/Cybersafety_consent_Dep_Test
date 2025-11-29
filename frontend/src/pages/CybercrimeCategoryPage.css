@@ -1,0 +1,400 @@
+/* Cybercrime Category Page Styles */
+.cybercrime-category-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Header Bar */
+.cybercrime-category-page__header-bar {
+  background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #1e3a5f 100%);
+  padding: 1.25rem 2rem;
+  box-shadow: 0 4px 20px rgba(26, 54, 93, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid #d4af37;
+}
+
+.cybercrime-category-page__header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cybercrime-category-page__logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cybercrime-category-page__logo-icon {
+  width: 48px;
+  height: 48px;
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.cybercrime-category-page__logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cybercrime-category-page__logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cybercrime-category-page__logo-title {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.cybercrime-category-page__logo-subtitle {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+}
+
+/* Breadcrumb */
+.cybercrime-category-page__breadcrumb {
+  background: #1a365d;
+  padding: 0.75rem 0;
+}
+
+.cybercrime-category-page__breadcrumb-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cybercrime-category-page__breadcrumb-item {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.cybercrime-category-page__breadcrumb-item:hover {
+  color: #60a5fa;
+}
+
+.cybercrime-category-page__breadcrumb-item--active {
+  color: white;
+  font-weight: 600;
+}
+
+.cybercrime-category-page__breadcrumb-separator {
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0.25rem;
+}
+
+/* Main Content */
+.cybercrime-category-page__main {
+  flex: 1;
+  padding: 3rem 0;
+}
+
+.cybercrime-category-page__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.cybercrime-category-page__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.cybercrime-category-page__title {
+  color: #1a365d;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.cybercrime-category-page__subtitle {
+  color: #4a5568;
+  font-size: 1.2rem;
+  font-weight: 500;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* Content Sections */
+.cybercrime-category-page__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.cybercrime-category-page__section {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(26, 54, 93, 0.08);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.cybercrime-category-page__section-header {
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  padding: 1.5rem 2rem;
+}
+
+.cybercrime-category-page__section-title {
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.cybercrime-category-page__section-body {
+  padding: 2rem;
+}
+
+.cybercrime-category-page__section-description {
+  margin-bottom: 1.5rem;
+}
+
+.cybercrime-category-page__section-description p {
+  color: #4a5568;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Prevention Tips */
+.cybercrime-category-page__prevention {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border-left: 4px solid #10b981;
+}
+
+.cybercrime-category-page__prevention-title {
+  color: #1a365d;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cybercrime-category-page__prevention-list {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.cybercrime-category-page__prevention-item {
+  color: #4a5568;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.cybercrime-category-page__prevention-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Actions */
+.cybercrime-category-page__actions {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.cybercrime-category-page__report-btn {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+  min-width: 200px;
+}
+
+.cybercrime-category-page__report-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+  background: linear-gradient(135def, #b91c1c 0%, #991b1b 100%);
+}
+
+/* Scroll to Top Button */
+.cybercrime-category-page__scroll-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cybercrime-category-page__scroll-top:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+  background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+}
+
+/* Footer */
+.cybercrime-category-page__footer {
+  background: #1a365d;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 2rem;
+  margin-top: auto;
+}
+
+.cybercrime-category-page__footer p {
+  margin: 0;
+  font-size: 0.875rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Error State */
+.cybercrime-category-page__error {
+  text-align: center;
+  padding: 4rem 2rem;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cybercrime-category-page__error h1 {
+  color: #1a365d;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.cybercrime-category-page__error button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cybercrime-category-page__error button:hover {
+  background: #1e40af;
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .cybercrime-category-page__header-bar {
+    padding: 0.75rem 1rem;
+  }
+  
+  .cybercrime-category-page__container {
+    padding: 0 1rem;
+  }
+  
+  .cybercrime-category-page__title {
+    font-size: 1.8rem;
+  }
+  
+  .cybercrime-category-page__subtitle {
+    font-size: 1rem;
+  }
+  
+  .cybercrime-category-page__section-header {
+    padding: 1rem 1.5rem;
+  }
+  
+  .cybercrime-category-page__section-title {
+    font-size: 1.2rem;
+  }
+  
+  .cybercrime-category-page__section-body {
+    padding: 1.5rem;
+  }
+  
+  .cybercrime-category-page__prevention {
+    padding: 1rem;
+  }
+  
+  .cybercrime-category-page__logo-title {
+    font-size: 0.9rem;
+  }
+  
+  .cybercrime-category-page__logo-subtitle {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cybercrime-category-page__main {
+    padding: 2rem 0;
+  }
+  
+  .cybercrime-category-page__container {
+    padding: 0 0.5rem;
+  }
+  
+  .cybercrime-category-page__title {
+    font-size: 1.5rem;
+  }
+  
+  .cybercrime-category-page__section-header {
+    padding: 0.75rem 1rem;
+  }
+  
+  .cybercrime-category-page__section-body {
+    padding: 1rem;
+  }
+  
+  .cybercrime-category-page__report-btn {
+    font-size: 1rem;
+    padding: 0.875rem 1.5rem;
+    min-width: 180px;
+  }
+  
+  .cybercrime-category-page__scroll-top {
+    width: 45px;
+    height: 45px;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    font-size: 1.3rem;
+  }
+}

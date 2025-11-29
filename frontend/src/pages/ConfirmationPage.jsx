@@ -8,7 +8,7 @@ import './ConfirmationPage.css';
  * ConfirmationPage Component
  * Shows completion message with token
  */
-const ConfirmationPage = () => {
+  const ConfirmationPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
@@ -99,7 +99,7 @@ const ConfirmationPage = () => {
             </div>
             <div className="confirmation-page__logo-text">
               <div className="confirmation-page__logo-title">Cybercrime Department, NTR</div>
-              <div className="confirmation-page__logo-subtitle">CUSTOMER CYBERSAFETY VERIFICATION SYSTEM</div>
+              <div className="confirmation-page__logo-subtitle">CYBERSURAKSHA - CUSTOMER CYBERSAFETY VERIFICATION SYSTEM</div>
             </div>
           </div>
         </div>
@@ -167,7 +167,7 @@ const ConfirmationPage = () => {
       </div>
 
       <footer className="confirmation-page__footer">
-        <p>© 2025 AP Cybercrime Department of Police — Customer Safety Verification System</p>
+        <p>© 2025 NTR Police Commissionerate, Vijayawada, Andhra Pradesh, India — CYBERSURAKSHA </p>
       </footer>
     </div>
   );

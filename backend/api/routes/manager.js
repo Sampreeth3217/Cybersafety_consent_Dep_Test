@@ -6,6 +6,22 @@ import { validateToken } from '../../utils/validators.js';
 const router = express.Router();
 
 /**
+ * GET /api/manager
+ * Test endpoint for manager route
+ */
+router.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Manager API endpoint is working',
+    methods: [
+      'POST /api/manager/login - Manager authentication',
+      'GET /api/manager/consent/:token - Lookup consent record',
+      'GET /api/manager/verify - Verify token'
+    ]
+  });
+});
+
+/**
  * POST /api/manager/login
  * Manager authentication
  */

@@ -1,0 +1,835 @@
+/* Main Landing Page Styles */
+.main-landing-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #1a365d;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Header Bar */
+.main-landing-page__header-bar {
+  background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #1e3a5f 100%);
+  padding: 1.25rem 2rem;
+  box-shadow: 0 4px 20px rgba(26, 54, 93, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid #d4af37;
+}
+
+.main-landing-page__header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.main-landing-page__logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.main-landing-page__logo-icon {
+  width: 48px;
+  height: 48px;
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.main-landing-page__logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.main-landing-page__logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.main-landing-page__logo-title {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.main-landing-page__logo-subtitle {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+}
+
+/* Hero Banner Section */
+.main-landing-page__hero-banner {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.main-landing-page__hero-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.main-landing-page__hero-image {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+}
+
+/* Action Cards Section */
+.main-landing-page__actions {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+}
+
+/* Safe Practices Section */
+.main-landing-page__safe-practices {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.main-landing-page__safe-practices-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.main-landing-page__practices-content {
+  flex: 1;
+}
+
+.main-landing-page__practices-title {
+  color: #2d5a8a;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  line-height: 1.3;
+}
+
+.main-landing-page__practices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.main-landing-page__practice-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 0;
+  border-left: 4px solid #3b82f6;
+  margin-bottom: 1rem;
+}
+
+.main-landing-page__practice-number {
+  background: #3b82f6;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.main-landing-page__practice-text {
+  color: #1a365d;
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.main-landing-page__practices-sidebar {
+  background: #f8fafc;
+  border-left: 4px solid #3b82f6;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  text-align: center;
+  border-radius: 0;
+}
+
+.main-landing-page__practices-illustration {
+  width: 280px;
+  height: 200px;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-landing-page__practices-illustration img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.main-landing-page__emergency-info {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.main-landing-page__emergency-title {
+  color: #2d5a8a;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.main-landing-page__emergency-number {
+  color: #f56565;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(245, 101, 101, 0.2);
+}
+
+.main-landing-page__actions-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.main-landing-page__action-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 0 1 280px;
+  max-width: 320px;
+  min-width: 280px;
+}
+
+.main-landing-page__card-image {
+  width: 250px;
+  height: 250px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 3px solid #3b82f6;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 30px rgba(26, 54, 93, 0.15);
+  overflow: hidden;
+  position: relative;
+}
+
+.main-landing-page__card-image--cybersuraksha {
+  padding: 0;
+}
+
+.main-landing-page__card-image--sebi {
+  background: #ffffff;
+  padding: 20px;
+}
+
+.main-landing-page__card-image:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(26, 54, 93, 0.25);
+  border-color: #1e40af;
+}
+
+.main-landing-page__card-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 0;
+}
+
+.main-landing-page__card-image--cybersuraksha img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.main-landing-page__card-icon {
+  font-size: 8rem;
+  color: #3b82f6;
+}
+
+.main-landing-page__card-button {
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  text-align: center;
+  min-height: 70px;
+  width: 100%;
+  max-width: 280px;
+  line-height: 1.3;
+}
+
+.main-landing-page__card-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+  background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+}
+
+
+
+/* Cybercrime Categories Section */
+.main-landing-page__categories {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #1a365d 0%, #2d5a8a 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.main-landing-page__categories::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.3;
+}
+
+.main-landing-page__categories-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.main-landing-page__categories-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.main-landing-page__categories-title {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.main-landing-page__categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.main-landing-page__category-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 150px;
+}
+
+.main-landing-page__category-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.main-landing-page__category-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.main-landing-page__category-card:hover::before {
+  opacity: 1;
+}
+
+.main-landing-page__category-content {
+  position: relative;
+  z-index: 2;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.main-landing-page__category-card:hover .main-landing-page__category-content {
+  transform: translateY(-10px);
+}
+
+.main-landing-page__category-title {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.main-landing-page__category-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  margin: 0.5rem 0 0 0;
+}
+
+.main-landing-page__category-card:hover .main-landing-page__category-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Footer */
+.main-landing-page__footer {
+  background: #1a365d;
+  color: white;
+  padding: 2rem 0;
+  margin-top: auto;
+  text-align: center;
+  border-top: 1px solid #2d5a8a;
+}
+
+.main-landing-page__footer p {
+  margin: 0;
+  font-size: 0.875rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .main-landing-page__actions-container {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .main-landing-page__card-image {
+    width: 250px;
+    height: 250px;
+  }
+  
+  .main-landing-page__card-icon {
+    font-size: 6rem;
+  }
+}
+
+
+
+
+
+/* Medium screens */
+@media (max-width: 1024px) {
+
+  
+  .main-landing-page__safe-practices-container {
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+  .main-landing-page__practices-illustration {
+    width: 240px;
+    height: 180px;
+  }
+  
+  .main-landing-page__actions-container {
+    gap: 1.5rem;
+  }
+  
+  .main-landing-page__action-card {
+    flex: 0 1 250px;
+    min-width: 220px;
+  }
+  
+  .main-landing-page__card-image {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .main-landing-page__card-button {
+    font-size: 0.9rem;
+    padding: 0.875rem 1.25rem;
+    max-width: 250px;
+  }
+}
+
+/* Large mobile devices (Android Plus, iPhone Pro Max) */
+@media (max-width: 900px) and (min-width: 769px) {
+  .main-landing-page__hero-banner {
+    height: 28vh;
+    min-height: 220px;
+    max-height: 300px;
+  }
+}
+
+/* Landscape orientation optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  .main-landing-page__hero-banner {
+    height: 50vh;
+    min-height: 200px;
+    max-height: 300px;
+  }
+}
+
+/* Standard mobile devices */
+@media (max-width: 768px) {
+  .main-landing-page__header-bar {
+    padding: 0.75rem 1rem;
+  }
+  
+  .main-landing-page__header-content {
+    max-width: 100%;
+  }
+  
+
+  
+  .main-landing-page__actions {
+    padding: 1.5rem 0;
+  }
+  
+  .main-landing-page__actions-container {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0 0.75rem;
+    align-items: center;
+  }
+  
+  .main-landing-page__card-image {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .main-landing-page__card-icon {
+    font-size: 5rem;
+  }
+  
+  .main-landing-page__card-button {
+    font-size: 0.9rem;
+    padding: 0.875rem 1.25rem;
+    max-width: 280px;
+  }
+  
+  .main-landing-page__safe-practices {
+    padding: 2rem 0;
+  }
+  
+  .main-landing-page__safe-practices-container {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0 0.75rem;
+  }
+  
+  .main-landing-page__practices-content {
+    padding: 0;
+  }
+  
+  .main-landing-page__practices-title {
+    font-size: 1.5rem;
+  }
+  
+  .main-landing-page__practice-item {
+    padding: 1.25rem;
+    gap: 0.75rem;
+  }
+  
+  .main-landing-page__practice-number {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  
+  .main-landing-page__practice-text {
+    font-size: 1rem;
+  }
+  
+  .main-landing-page__practices-illustration {
+    font-size: 6rem;
+    padding: 1.5rem;
+  }
+  
+  .main-landing-page__emergency-number {
+    font-size: 2rem;
+  }
+  
+  .main-landing-page__categories {
+    padding: 3rem 0;
+  }
+  
+  .main-landing-page__categories-container {
+    padding: 0 1rem;
+  }
+  
+  .main-landing-page__categories-title {
+    font-size: 2rem;
+  }
+  
+  .main-landing-page__categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .main-landing-page__category-card {
+    padding: 1rem;
+    min-height: 120px;
+  }
+  
+  .main-landing-page__category-title {
+    font-size: 1.1rem;
+  }
+  
+  .main-landing-page__logo {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: left;
+  }
+  
+  .main-landing-page__logo-title {
+    font-size: 0.9rem;
+    line-height: 1.2;
+    word-wrap: break-word;
+  }
+  
+  .main-landing-page__logo-subtitle {
+    font-size: 0.65rem;
+    line-height: 1.3;
+    word-wrap: break-word;
+  }
+}
+
+@media (max-width: 480px) {
+
+  
+  .main-landing-page__actions {
+    padding: 1rem 0;
+  }
+  
+  .main-landing-page__actions-container {
+    padding: 0 0.5rem;
+    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .main-landing-page__actions-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .main-landing-page__action-card {
+    flex: none;
+    width: 100%;
+    max-width: 280px;
+    min-width: auto;
+  }
+  
+  .main-landing-page__card-image {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .main-landing-page__card-icon {
+    font-size: 3.5rem;
+  }
+  
+  .main-landing-page__card-button {
+    font-size: 0.8rem;
+    padding: 0.75rem 1rem;
+    max-width: 260px;
+  }
+  
+  .main-landing-page__safe-practices {
+    padding: 1.5rem 0;
+  }
+  
+  .main-landing-page__safe-practices-container {
+    padding: 0 0.5rem;
+    gap: 1rem;
+  }
+  
+  .main-landing-page__categories-grid {
+    gap: 0.5rem;
+  }
+  
+  .main-landing-page__category-card {
+    padding: 0.75rem;
+    min-height: 100px;
+  }
+  
+  .main-landing-page__category-title {
+    font-size: 0.9rem;
+    line-height: 1.2;
+  }
+  
+  .main-landing-page__main {
+    padding: 2rem 0;
+  }
+  
+  .main-landing-page__hero {
+    margin-bottom: 2rem;
+  }
+  
+  .main-landing-page__title {
+    font-size: 1.75rem;
+  }
+  
+  .main-landing-page__subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .main-landing-page__description {
+    font-size: 0.95rem;
+  }
+  
+  .main-landing-page__logo {
+    gap: 0.75rem;
+  }
+  
+  .main-landing-page__logo-icon {
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  .main-landing-page__header-bar {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .main-landing-page__logo-title {
+    font-size: 0.8rem;
+  }
+  
+  .main-landing-page__logo-subtitle {
+    font-size: 0.6rem;
+  }
+  
+  .main-landing-page__safe-practices {
+    padding: 2rem 0;
+  }
+  
+  .main-landing-page__safe-practices-container {
+    padding: 0 0.75rem;
+  }
+  
+  .main-landing-page__practices-content {
+    padding: 1.5rem;
+  }
+  
+  .main-landing-page__practices-title {
+    font-size: 1.25rem;
+  }
+  
+  .main-landing-page__practice-item {
+    padding: 1rem;
+    gap: 0.75rem;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .main-landing-page__practice-number {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+  }
+  
+  .main-landing-page__practice-text {
+    font-size: 0.9rem;
+  }
+  
+  .main-landing-page__practices-illustration {
+    font-size: 4rem;
+    padding: 1rem;
+  }
+  
+  .main-landing-page__emergency-info {
+    padding: 1.5rem;
+  }
+  
+  .main-landing-page__emergency-title {
+    font-size: 1rem;
+  }
+  
+  .main-landing-page__emergency-number {
+    font-size: 1.8rem;
+  }
+  
+  .main-landing-page__categories {
+    padding: 2rem 0;
+  }
+  
+  .main-landing-page__categories-container {
+    padding: 0 0.75rem;
+  }
+  
+  .main-landing-page__categories-title {
+    font-size: 1.5rem;
+  }
+  
+  .main-landing-page__category-card {
+    padding: 1.25rem;
+  }
+  
+  .main-landing-page__category-title {
+    font-size: 1rem;
+  }
+}

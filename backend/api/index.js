@@ -10,11 +10,8 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
-app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',
-  credentials: true
-}));
+// Comprehensive CORS handling for Vercel
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -24,6 +21,20 @@ connectDB();
 // Routes
 app.use('/api/consent', consentRoutes);
 app.use('/api/manager', managerRoutes);
+
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ 
+    success: true, 
+    message: 'Cybersafety Backend API',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      consent: '/api/consent',
+      manager: '/api/manager'
+    }
+  });
+});
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -53,7 +64,7 @@ app.use((err, req, res, next) => {
 });
 
 // For local development
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {

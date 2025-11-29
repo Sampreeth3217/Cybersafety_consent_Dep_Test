@@ -110,3 +110,32 @@ export const copyToClipboard = async (text) => {
     }
   }
 };
+
+/**
+ * Detect if user is on iOS device
+ */
+export const isIOS = () => {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  
+  // Check for iOS devices
+  return /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+};
+
+/**
+ * Detect if user is on Android device
+ */
+export const isAndroid = () => {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  
+  // Check for Android devices
+  return /android/i.test(userAgent);
+};
+
+/**
+ * Get device type (ios, android, or desktop)
+ */
+export const getDeviceType = () => {
+  if (isIOS()) return 'ios';
+  if (isAndroid()) return 'android';
+  return 'desktop';
+};

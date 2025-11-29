@@ -16,13 +16,22 @@ export const TOKEN_LENGTH = 7;
 
 export const ROUTES = {
   HOME: '/',
-  CONSENT_FLOW: '/consent-flow',
-  CONFIRMATION: '/confirmation',
-  MANAGER_LOGIN: '/manager',
-  MANAGER_DASHBOARD: '/manager/dashboard'
+  CYBERSAFETY_CONSENT: '/cybersuraksha',
+  CONSENT_FLOW: '/cybersuraksha/flow',
+  CONFIRMATION: '/cybersuraksha/confirmation',
+  MANAGER_LOGIN: '/cybersuraksha/manager',
+  MANAGER_DASHBOARD: '/cybersuraksha/manager/dashboard',
+  CYBERCRIME_CRYPTOCURRENCY: '/cybercrime/cryptocurrency',
+  CYBERCRIME_TERRORISM: '/cybercrime/cyber-terrorism',
+  CYBERCRIME_HACKING: '/cybercrime/hacking',
+  CYBERCRIME_SOCIAL_MEDIA: '/cybercrime/social-media',
+  CYBERCRIME_FINANCIAL_FRAUD: '/cybercrime/financial-fraud',
+  CYBERCRIME_EXPLICIT_MATERIAL: '/cybercrime/explicit-material',
+  CYBERCRIME_RANSOMWARE: '/cybercrime/ransomware',
+  CYBERCRIME_CHILD_ABUSE: '/cybercrime/child-abuse'
 };
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 export const SPEECH_RECOGNITION_CONFIG = {
   continuous: false,

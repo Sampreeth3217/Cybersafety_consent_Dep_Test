@@ -29,6 +29,7 @@ const StatementReader = ({
   const [isValidating, setIsValidating] = React.useState(false);
   const [hasStartedSession, setHasStartedSession] = React.useState(false);
   const [isPlayingAudio, setIsPlayingAudio] = React.useState(false);
+  const [hideInstructions, setHideInstructions] = React.useState(false);
   const listRef = useRef(null);
   const currentStatementRef = useRef(null);
   const validationTimerRef = useRef(null);
@@ -43,7 +44,7 @@ const StatementReader = ({
       playingInstructions: 'Playing instructions...',
       notSupported: 'Speech recognition is not supported in your browser. Please use Chrome, Edge, or Safari.',
       completed: 'Completed',
-      reading: 'Reading...'
+      reading: 'Listening...'
     },
     te: {
       instruction: 'ప్రతి వాక్యాన్ని స్పష్టంగా చదవండి. మీరు మాట్లాడేటప్పుడు పదాలు ఆకుపచ్చగా మారుతాయి.',
@@ -53,7 +54,7 @@ const StatementReader = ({
       playingInstructions: 'సూచనలు ప్లే అవుతున్నాయి...',
       notSupported: 'మీ బ్రౌజర్‌లో స్పీచ్ రికగ్నిషన్ సపోర్ట్ లేదు. దయచేసి Chrome, Edge, లేదా Safari ఉపయోగించండి.',
       completed: 'పూర్తయింది',
-      reading: 'చదువుతోంది...'
+      reading: 'వింటోంది...'
     }
   };
 
@@ -71,6 +72,7 @@ const StatementReader = ({
     
     audio.onended = () => {
       setIsPlayingAudio(false);
+      setHideInstructions(true);
       resetTranscript();
       setHighlightedWords(new Set());
       startListening();
@@ -79,6 +81,7 @@ const StatementReader = ({
     audio.onerror = () => {
       console.error('Error playing audio instruction');
       setIsPlayingAudio(false);
+      setHideInstructions(true);
       // Start listening anyway even if audio fails
       resetTranscript();
       setHighlightedWords(new Set());
@@ -88,6 +91,7 @@ const StatementReader = ({
     audio.play().catch(err => {
       console.error('Error playing audio:', err);
       setIsPlayingAudio(false);
+      setHideInstructions(true);
       // Start listening anyway
       resetTranscript();
       setHighlightedWords(new Set());
@@ -108,6 +112,7 @@ const StatementReader = ({
           playInstructionAndStartListening();
         } else {
           // For all other statements, just start listening directly
+          setHideInstructions(true);
           resetTranscript();
           setHighlightedWords(new Set());
           startListening();
@@ -242,15 +247,10 @@ const StatementReader = ({
 
   return (
     <div className="statement-reader">
-      <div className="statement-reader__header">
+      <div className={`statement-reader__header ${hideInstructions ? 'statement-reader__header--no-border' : ''}`}>
         {isPlayingAudio && (
           <div className="statement-reader__audio-indicator">
             🔊 {text.playingInstructions}
-          </div>
-        )}
-        {isListening && !isPlayingAudio && (
-          <div className="statement-reader__mic-indicator">
-            🎤 {text.listening}
           </div>
         )}
       </div>

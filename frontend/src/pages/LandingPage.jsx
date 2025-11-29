@@ -9,11 +9,14 @@ import './LandingPage.css';
 /**
  * LandingPage Component
  * Initial page for language selection and name input
+ * For iOS users, only English option is available
  */
 const LandingPage = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [showNameForm, setShowNameForm] = useState(false);
   const navigate = useNavigate();
+
+
 
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
@@ -71,11 +74,11 @@ const LandingPage = () => {
         <div className="landing-page__header-content">
           <div className="landing-page__logo">
             <div className="landing-page__logo-icon">
-              <img src="/ap-police-logo.png" alt="AP Police Logo" />
+              <img src="/CyberSurakshaLogo.png" alt="AP Police Logo" />
             </div>
             <div className="landing-page__logo-text">
               <div className="landing-page__logo-title">Cybercrime Department, NTR</div>
-              <div className="landing-page__logo-subtitle">CUSTOMER CYBERSAFETY VERIFICATION SYSTEM</div>
+              <div className="confirmation-page__logo-subtitle">CYBERSURAKSHA - CUSTOMER CYBERSAFETY VERIFICATION SYSTEM</div>
             </div>
           </div>
         </div>
@@ -116,11 +119,11 @@ const LandingPage = () => {
           )}
         </div>
       </div>
-
       <footer className="landing-page__footer">
-        <p>© 2025 AP Cybercrime Department of Police — Customer Safety Verification System</p>
+        <p>© 2025 NTR Police Commissionerate, Vijayawada, Andhra Pradesh, India — CYBERSURAKSHA </p>
       </footer>
     </div>
+    //NSC
   );
 };
 
