@@ -1,0 +1,239 @@
+.add-mule-account-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #f7fafc, #edf2f7);
+}
+
+.add-mule-header {
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.back-button {
+  background: transparent;
+  border: none;
+  color: #667eea;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 0;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.back-button:hover {
+  color: #764ba2;
+}
+
+.header-info h1 {
+  color: #2d3748;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.bank-ifsc {
+  color: #718096;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.add-mule-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.form-card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 35px;
+  padding-bottom: 25px;
+  border-bottom: 2px solid #edf2f7;
+}
+
+.form-header h2 {
+  color: #2d3748;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.form-header p {
+  color: #718096;
+  font-size: 15px;
+}
+
+.mule-account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  color: #2d3748;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.required {
+  color: #e53e3e;
+}
+
+.form-input,
+.form-textarea {
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-help {
+  color: #718096;
+  font-size: 12px;
+  margin-top: -4px;
+}
+
+.error-message {
+  background: #fff5f5;
+  border: 1px solid #fc8181;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #c53030;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.error-icon {
+  font-size: 18px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.cancel-button,
+.submit-button {
+  flex: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-button {
+  background: #edf2f7;
+  color: #2d3748;
+}
+
+.cancel-button:hover {
+  background: #e2e8f0;
+}
+
+.submit-button {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+}
+
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(72, 187, 120, 0.3);
+}
+
+.submit-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.info-notice {
+  margin-top: 30px;
+  padding: 16px 20px;
+  background: #fffaf0;
+  border: 1px solid #f6ad55;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.info-notice strong {
+  color: #c05621;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.info-notice p {
+  color: #744210;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .add-mule-header {
+    padding: 15px 20px;
+  }
+
+  .header-info h1 {
+    font-size: 24px;
+  }
+
+  .add-mule-content {
+    padding: 20px 15px;
+  }
+
+  .form-card {
+    padding: 25px 20px;
+  }
+
+  .form-header h2 {
+    font-size: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .cancel-button,
+  .submit-button {
+    width: 100%;
+  }
+}

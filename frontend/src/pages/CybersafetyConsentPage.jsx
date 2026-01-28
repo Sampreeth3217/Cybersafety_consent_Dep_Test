@@ -14,6 +14,7 @@ import './CybersafetyConsentPage.css';
 const CybersafetyConsentPage = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [showNameForm, setShowNameForm] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLanguageChange = (language) => {
@@ -21,20 +22,61 @@ const CybersafetyConsentPage = () => {
     setShowNameForm(true);
   };
 
-  const handleNameSubmit = (name) => {
-    // Generate unique token
-    const token = generateToken();
+  const handleNameSubmit = async (name, mobileNumber) => {
+    console.log('CybersafetyConsentPage handleNameSubmit called with:', { name, mobileNumber });
+    setLoading(true);
+    
+    try {
+      // Check if mobile number already has a consent record
+      const checkResponse = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/consent/check`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ mobileNumber })
+      });
 
-    // Store data in sessionStorage
-    sessionStorage.setItem('consentData', JSON.stringify({
-      name,
-      language: selectedLanguage,
-      token,
-      currentStatementIndex: 0
-    }));
+      const checkData = await checkResponse.json();
 
-    // Navigate to consent flow
-    navigate(ROUTES.CONSENT_FLOW);
+      if (checkData.success && checkData.exists) {
+        // Navigate to confirmation page with existing token data
+        sessionStorage.setItem('consentData', JSON.stringify({
+          name: checkData.data.name,
+          mobileNumber,
+          language: selectedLanguage,
+          token: checkData.data.token,
+          isExisting: true
+        }));
+        navigate(ROUTES.CONFIRMATION);
+        return;
+      }
+
+      // Generate unique token
+      const token = generateToken();
+
+      // Store data in sessionStorage
+      const dataToStore = {
+        name,
+        mobileNumber,
+        language: selectedLanguage,
+        token,
+        currentStatementIndex: 0
+      };
+      
+      console.log('Storing consent data:', dataToStore);
+      sessionStorage.setItem('consentData', JSON.stringify(dataToStore));
+
+      // Navigate to consent flow
+      navigate(ROUTES.CONSENT_FLOW);
+    } catch (error) {
+      console.error('Error checking mobile number:', error);
+      const errorMessages = {
+        en: 'Error checking mobile number. Please try again.',
+        te: 'మొబైల్ నంబర్ తనిఖీ చేయడంలో లోపం. దయచేసి మళ్లీ ప్రయత్నించండి.'
+      };
+      alert(errorMessages[selectedLanguage] || errorMessages.en);
+      setLoading(false);
+    }
   };
 
   const content = {
@@ -106,12 +148,14 @@ const CybersafetyConsentPage = () => {
               <button
                 className="cybersafety-consent-page__back-button"
                 onClick={() => setShowNameForm(false)}
+                disabled={loading}
               >
                 ← {selectedLanguage === 'en' ? 'Back' : 'వెనుకకు'}
               </button>
               <NameInputForm
                 language={selectedLanguage}
                 onSubmit={handleNameSubmit}
+                loading={loading}
               />
             </div>
           )}

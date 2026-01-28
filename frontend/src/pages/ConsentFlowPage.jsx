@@ -30,6 +30,20 @@ const ConsentFlowPage = () => {
 
     try {
       const data = JSON.parse(storedData);
+      
+      console.log('Loaded consent data:', data);
+      console.log('Mobile number in data:', data.mobileNumber);
+      console.log('Data has mobileNumber?', !!data.mobileNumber);
+      
+      // Validate that mobile number exists (required field added in update)
+      if (!data.mobileNumber) {
+        console.warn('Mobile number missing from consent data, redirecting to home');
+        console.warn('Full data object:', JSON.stringify(data));
+        sessionStorage.removeItem('consentData');
+        navigate(ROUTES.HOME);
+        return;
+      }
+      
       setConsentData(data);
       setStatements(getStatements(data.language));
       setCurrentIndex(data.currentStatementIndex || 0);
@@ -67,6 +81,7 @@ const ConsentFlowPage = () => {
     try {
       const response = await submitConsent({
         name: consentData.name,
+        mobileNumber: consentData.mobileNumber,
         token: consentData.token,
         language: consentData.language
       });
@@ -76,6 +91,7 @@ const ConsentFlowPage = () => {
         navigate(ROUTES.CONFIRMATION, {
           state: {
             name: consentData.name,
+            mobileNumber: consentData.mobileNumber,
             token: consentData.token,
             language: consentData.language
           }

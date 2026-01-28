@@ -12,8 +12,53 @@ router.get('/', (req, res) => {
   res.json({
     success: true,
     message: 'Consent API endpoint is working',
-    methods: ['POST /api/consent - Submit consent record']
+    methods: ['POST /api/consent - Submit consent record', 'POST /api/consent/check - Check existing record']
   });
+});
+
+/**
+ * POST /api/consent/check
+ * Check if a mobile number already has a consent record
+ */
+router.post('/check', async (req, res) => {
+  try {
+    const { mobileNumber } = req.body;
+
+    // Validate mobile number
+    if (!mobileNumber || !/^[6-9]\d{9}$/.test(mobileNumber)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid mobile number. Must be a valid 10-digit Indian mobile number.'
+      });
+    }
+
+    // Check if record exists
+    const existingRecord = await ConsentRecord.findOne({ mobileNumber });
+    
+    if (existingRecord) {
+      return res.json({
+        success: true,
+        exists: true,
+        data: {
+          token: existingRecord.token,
+          name: existingRecord.name,
+          createdAt: existingRecord.createdAt
+        }
+      });
+    }
+
+    return res.json({
+      success: true,
+      exists: false
+    });
+
+  } catch (error) {
+    console.error('Error checking mobile number:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error checking mobile number'
+    });
+  }
 });
 
 /**
@@ -27,13 +72,20 @@ router.post('/', async (req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   
   try {
-    const { name, token, language } = req.body;
+    const { name, mobileNumber, token, language } = req.body;
 
     // Validate inputs
     if (!validateName(name)) {
       return res.status(400).json({
         success: false,
         message: 'Invalid name. Name is required and must be less than 200 characters.'
+      });
+    }
+
+    if (!mobileNumber || !/^[6-9]\d{9}$/.test(mobileNumber)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid mobile number. Must be a valid 10-digit Indian mobile number.'
       });
     }
 
@@ -63,9 +115,22 @@ router.post('/', async (req, res) => {
       });
     }
 
+    // Check if mobile number already has a record
+    const existingMobile = await ConsentRecord.findOne({ mobileNumber });
+    if (existingMobile) {
+      return res.status(409).json({
+        success: false,
+        message: 'A consent record already exists for this mobile number.',
+        data: {
+          token: existingMobile.token
+        }
+      });
+    }
+
     // Create new consent record
     const consentRecord = new ConsentRecord({
       name: sanitizedName,
+      mobileNumber,
       token: token.toUpperCase(),
       language
     });

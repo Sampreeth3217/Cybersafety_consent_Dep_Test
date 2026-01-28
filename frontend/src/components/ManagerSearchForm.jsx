@@ -48,12 +48,6 @@ const ManagerSearchForm = ({ onSearch, onLogout }) => {
     <div className="manager-search-form">
       <div className="manager-search-form__header">
         <h2 className="manager-search-form__title">Search Consent Record</h2>
-        <button
-          className="manager-search-form__logout"
-          onClick={onLogout}
-        >
-          Logout
-        </button>
       </div>
 
       <form onSubmit={handleSubmit} className="manager-search-form__form">

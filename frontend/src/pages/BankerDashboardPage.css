@@ -1,0 +1,257 @@
+.banker-dashboard-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #f7fafc, #edf2f7);
+}
+
+.dashboard-header {
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left h1 {
+  color: #2d3748;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.bank-ifsc {
+  color: #718096;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.logout-button {
+  background: #e53e3e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+  background: #c53030;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(197, 48, 48, 0.3);
+}
+
+.dashboard-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.stats-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 30px;
+  color: white;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.stat-icon {
+  font-size: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+}
+
+.stat-details h3 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.stat-details p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.action-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.action-card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.action-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.add-card {
+  border-top: 4px solid #48bb78;
+}
+
+.add-card:hover {
+  border-top-color: #38a169;
+}
+
+.view-card {
+  border-top: 4px solid #4299e1;
+}
+
+.view-card:hover {
+  border-top-color: #3182ce;
+}
+
+.card-icon {
+  font-size: 56px;
+  margin-bottom: 20px;
+}
+
+.action-card h2 {
+  color: #2d3748;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.action-card p {
+  color: #718096;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.recent-activity {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.recent-activity h2 {
+  color: #2d3748;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #f7fafc;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.activity-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.activity-info strong {
+  color: #2d3748;
+  font-size: 16px;
+}
+
+.account-number {
+  color: #718096;
+  font-size: 14px;
+}
+
+.activity-date {
+  color: #a0aec0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 15px 20px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .header-left h1 {
+    font-size: 24px;
+  }
+
+  .dashboard-content {
+    padding: 20px 15px;
+  }
+
+  .stats-card {
+    padding: 20px;
+  }
+
+  .stat-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 36px;
+  }
+
+  .stat-details h3 {
+    font-size: 36px;
+  }
+
+  .stat-details p {
+    font-size: 14px;
+  }
+
+  .action-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .action-card {
+    padding: 30px 20px;
+  }
+
+  .activity-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}

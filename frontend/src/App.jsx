@@ -4,10 +4,17 @@ import MainLandingPage from './pages/MainLandingPage';
 import CybersafetyConsentPage from './pages/CybersafetyConsentPage';
 import ConsentFlowPage from './pages/ConsentFlowPage';
 import ConfirmationPage from './pages/ConfirmationPage';
-import ManagerLoginPage from './pages/ManagerLoginPage';
 import ManagerDashboardPage from './pages/ManagerDashboardPage';
 import CybercrimeDetailPage from './pages/CybercrimeDetailPage';
 import CybercrimeCategoryPage from './pages/CybercrimeCategoryPage';
+import BankerLoginPage from './pages/BankerLoginPage';
+import BankerDashboardPage from './pages/BankerDashboardPage';
+import AddMuleAccountPage from './pages/AddMuleAccountPage';
+import ViewMuleAccountsPage from './pages/ViewMuleAccountsPage';
+import PoliceLoginPage from './pages/PoliceLoginPage';
+import PoliceDashboardPage from './pages/PoliceDashboardPage';
+import PoliceMuleAccountsPage from './pages/PoliceMuleAccountsPage';
+import PoliceAllRecordsPage from './pages/PoliceAllRecordsPage';
 import { ROUTES } from './config/constants';
 import './App.css';
 
@@ -28,9 +35,21 @@ function App() {
           <Route path={ROUTES.CONSENT_FLOW} element={<ConsentFlowPage />} />
           <Route path={ROUTES.CONFIRMATION} element={<ConfirmationPage />} />
           
-          {/* Manager Routes (hidden) */}
-          <Route path={ROUTES.MANAGER_LOGIN} element={<ManagerLoginPage />} />
+          {/* Manager Routes (login removed) */}
+          <Route path={ROUTES.MANAGER_LOGIN} element={<ManagerDashboardPage />} />
           <Route path={ROUTES.MANAGER_DASHBOARD} element={<ManagerDashboardPage />} />
+          
+          {/* Banker Routes */}
+          <Route path="/cybersuraksha/banker" element={<BankerLoginPage />} />
+          <Route path="/cybersuraksha/banker/dashboard" element={<BankerDashboardPage />} />
+          <Route path="/cybersuraksha/banker/add-mule-account" element={<AddMuleAccountPage />} />
+          <Route path="/cybersuraksha/banker/view-mule-accounts" element={<ViewMuleAccountsPage />} />
+          
+          {/* Police Routes */}
+          <Route path="/cybersuraksha/police" element={<PoliceLoginPage />} />
+          <Route path="/cybersuraksha/police/dashboard" element={<PoliceDashboardPage />} />
+          <Route path="/cybersuraksha/police/all-records" element={<PoliceAllRecordsPage />} />
+          <Route path="/cybersuraksha/police/mule-accounts" element={<PoliceMuleAccountsPage />} />
           
           {/* Cybercrime Categories Page (old) */}
           <Route path="/cybercrime-categories" element={<CybercrimeDetailPage />} />

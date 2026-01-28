@@ -37,9 +37,13 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Check against environment variables
-    const validUsername = process.env.MANAGER_USER;
-    const validPassword = process.env.MANAGER_PASS;
+    // Normalize inputs (trim) and check against environment variables
+    const inputUsername = String(username).trim();
+    const inputPassword = String(password).trim();
+
+    const validUsername = (process.env.MANAGER_USER || '').trim();
+    const validPassword = (process.env.MANAGER_PASS || '').trim();
+    const jwtSecret = (process.env.JWT_SECRET || '').trim();
 
     if (!validUsername || !validPassword) {
       console.error('Manager credentials not configured in environment variables');
@@ -49,8 +53,16 @@ router.post('/login', async (req, res) => {
       });
     }
 
+    if (!jwtSecret) {
+      console.error('JWT_SECRET not configured in environment variables');
+      return res.status(500).json({
+        success: false,
+        message: 'Server configuration error'
+      });
+    }
+
     // Simple comparison (in production, use bcrypt for hashed passwords)
-    if (username !== validUsername || password !== validPassword) {
+    if (inputUsername !== validUsername || inputPassword !== validPassword) {
       return res.status(401).json({
         success: false,
         message: 'Invalid credentials'
@@ -58,7 +70,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Generate JWT token
-    const token = generateToken(username);
+    const token = generateToken(validUsername);
 
     res.json({
       success: true,
@@ -80,7 +92,8 @@ router.post('/login', async (req, res) => {
  * GET /api/manager/consent/:token
  * Lookup consent record by token (requires authentication)
  */
-router.get('/consent/:token', verifyToken, async (req, res) => {
+// Public access: remove verification for manager dashboard queries
+router.get('/consent/:token', async (req, res) => {
   try {
     const { token } = req.params;
 

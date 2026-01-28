@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../config/constants';
+import AIChatbot from '../components/AIChatbot';
 import './MainLandingPage.css';
 
 /**
@@ -225,6 +226,9 @@ const MainLandingPage = () => {
       <footer className="main-landing-page__footer">
         <p>© 2025 NTR Police Commissionerate, Vijayawada, Andhra Pradesh, India — CYBERCRIME AWARENESS AND PREVENTION PORTAL</p>
       </footer>
+      
+      {/* AI Chatbot */}
+      <AIChatbot />
     </div>
   );
 };

@@ -4,14 +4,41 @@ import dotenv from 'dotenv';
 import connectDB from '../config/database.js';
 import consentRoutes from './routes/consent.js';
 import managerRoutes from './routes/manager.js';
+import bankerRoutes from './routes/banker.js';
+import muleAccountRoutes from './routes/muleAccount.js';
+import policeRoutes from './routes/police.js';
+import policeAnalyticsRoutes from './routes/policeAnalytics.js';
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
 
-// Comprehensive CORS handling for Vercel
-app.use(cors());
+// Handle preflight requests
+app.options('*', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', '*');
+  res.setHeader('Access-Control-Max-Age', '86400');
+  res.status(200).end();
+});
+
+// Add CORS headers to all responses
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', '*');
+  next();
+});
+
+// Allow all CORS requests
+app.use(cors({
+  origin: '*',
+  credentials: false,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: '*'
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -21,6 +48,10 @@ connectDB();
 // Routes
 app.use('/api/consent', consentRoutes);
 app.use('/api/manager', managerRoutes);
+app.use('/api/banker', bankerRoutes);
+app.use('/api/mule-account', muleAccountRoutes);
+app.use('/api/police', policeRoutes);
+app.use('/api/police/analytics', policeAnalyticsRoutes);
 
 // Root endpoint
 app.get('/', (req, res) => {
@@ -31,7 +62,11 @@ app.get('/', (req, res) => {
     endpoints: {
       health: '/api/health',
       consent: '/api/consent',
-      manager: '/api/manager'
+      manager: '/api/manager',
+      banker: '/api/banker',
+      muleAccount: '/api/mule-account',
+      police: '/api/police',
+      policeAnalytics: '/api/police/analytics'
     }
   });
 });

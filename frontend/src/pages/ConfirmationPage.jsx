@@ -60,8 +60,10 @@ import './ConfirmationPage.css';
 
   const content = {
     en: {
-      title: 'Consent Completed Successfully!',
-      message: 'Thank you for completing all cybersafety statements.',
+      title: consentData?.isExisting ? 'Consent Record Already Exists!' : 'Consent Completed Successfully!',
+      message: consentData?.isExisting 
+        ? 'You have already completed the cybersafety consent process.' 
+        : 'Thank you for completing all cybersafety statements.',
       instruction: 'Please share this reference code with the bank staff:',
       tokenLabel: 'Your Reference Code',
       copyButton: 'Copy Code',
@@ -73,8 +75,10 @@ import './ConfirmationPage.css';
       startNewButton: 'Start New Session'
     },
     te: {
-      title: 'సమ్మతి విజయవంతంగా పూర్తయింది!',
-      message: 'అన్ని సైబర్ భద్రత ప్రకటనలను పూర్తి చేసినందుకు ధన్యవాదాలు.',
+      title: consentData?.isExisting ? 'సమ్మతి రికార్డ్ ఇప్పటికే ఉంది!' : 'సమ్మతి విజయవంతంగా పూర్తయింది!',
+      message: consentData?.isExisting
+        ? 'మీరు ఇప్పటికే సైబర్ భద్రత సమ్మతి ప్రక్రియను పూర్తి చేసారు.'
+        : 'అన్ని సైబర్ భద్రత ప్రకటనలను పూర్తి చేసినందుకు ధన్యవాదాలు.',
       instruction: 'దయచేసి ఈ రిఫరెన్స్ కోడ్‌ను బ్యాంక్ సిబ్బందితో పంచుకోండి:',
       tokenLabel: 'మీ రిఫరెన్స్ కోడ్',
       copyButton: 'కోడ్ కాపీ చేయండి',

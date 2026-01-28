@@ -27,6 +27,7 @@
     "MONGODB_URI": "@mongodb_uri",
     "MANAGER_USER": "@manager_user",
     "MANAGER_PASS": "@manager_pass",
-    "JWT_SECRET": "@jwt_secret"
+    "JWT_SECRET": "@jwt_secret",
+    "BANKER_JWT_SECRET": "@banker_jwt_secret"
   }
 }

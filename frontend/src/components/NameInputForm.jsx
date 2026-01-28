@@ -4,26 +4,33 @@ import './NameInputForm.css';
 
 /**
  * NameInputForm Component
- * Collects user's name before starting the consent flow
+ * Collects user's name and mobile number before starting the consent flow
  */
-const NameInputForm = ({ language, onSubmit }) => {
+const NameInputForm = ({ language, onSubmit, loading }) => {
   const [name, setName] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
   const [error, setError] = useState('');
 
   const labels = {
     en: {
-      title: 'Enter Your Name',
-      placeholder: 'Your full name',
+      title: 'Enter Your Details',
+      namePlaceholder: 'Your full name',
+      mobilePlaceholder: 'Mobile number (10 digits)',
       button: 'Start',
-      errorEmpty: 'Please enter your name',
-      errorInvalid: 'Please enter a valid name (max 200 characters)'
+      errorNameEmpty: 'Please enter your name',
+      errorNameInvalid: 'Please enter a valid name (max 200 characters)',
+      errorMobileEmpty: 'Please enter your mobile number',
+      errorMobileInvalid: 'Please enter a valid 10-digit mobile number'
     },
     te: {
-      title: 'మీ పేరు నమోదు చేయండి',
-      placeholder: 'మీ పూర్తి పేరు',
+      title: 'మీ వివరాలను నమోదు చేయండి',
+      namePlaceholder: 'మీ పూర్తి పేరు',
+      mobilePlaceholder: 'మొబైల్ నంబర్ (10 అంకెలు)',
       button: 'ప్రారంభించండి',
-      errorEmpty: 'దయచేసి మీ పేరు నమోదు చేయండి',
-      errorInvalid: 'దయచేసి చెల్లుబాటు అయ్యే పేరును నమోదు చేయండి (గరిష్టంగా 200 అక్షరాలు)'
+      errorNameEmpty: 'దయచేసి మీ పేరు నమోదు చేయండి',
+      errorNameInvalid: 'దయచేసి చెల్లుబాటు అయ్యే పేరును నమోదు చేయండి (గరిష్టంగా 200 అక్షరాలు)',
+      errorMobileEmpty: 'దయచేసి మీ మొబైల్ నంబర్‌ను నమోదు చేయండి',
+      errorMobileInvalid: 'దయచేసి చెల్లుబాటు అయ్యే 10 అంకెల మొబైల్ నంబర్‌ను నమోదు చేయండి'
     }
   };
 
@@ -34,16 +41,27 @@ const NameInputForm = ({ language, onSubmit }) => {
     setError('');
 
     if (!name.trim()) {
-      setError(text.errorEmpty);
+      setError(text.errorNameEmpty);
       return;
     }
 
     if (!isValidName(name)) {
-      setError(text.errorInvalid);
+      setError(text.errorNameInvalid);
       return;
     }
 
-    onSubmit(name.trim());
+    if (!mobileNumber.trim()) {
+      setError(text.errorMobileEmpty);
+      return;
+    }
+
+    // Validate Indian mobile number (10 digits, starts with 6-9)
+    if (!/^[6-9]\d{9}$/.test(mobileNumber)) {
+      setError(text.errorMobileInvalid);
+      return;
+    }
+
+    onSubmit(name.trim(), mobileNumber.trim());
   };
 
   return (
@@ -53,16 +71,29 @@ const NameInputForm = ({ language, onSubmit }) => {
         <input
           type="text"
           className="name-input-form__input"
-          placeholder={text.placeholder}
+          placeholder={text.namePlaceholder}
           value={name}
           onChange={(e) => setName(e.target.value)}
           maxLength={200}
           autoFocus
+          disabled={loading}
         />
-        {error && <p className="name-input-form__error">{error}</p>}
       </div>
-      <button type="submit" className="name-input-form__button">
-        {text.button}
+      <div className="name-input-form__field">
+        <input
+          type="tel"
+          className="name-input-form__input"
+          placeholder={text.mobilePlaceholder}
+          value={mobileNumber}
+          onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, ''))}
+          maxLength={10}
+          pattern="[6-9][0-9]{9}"
+          disabled={loading}
+        />
+      </div>
+      {error && <p className="name-input-form__error">{error}</p>}
+      <button type="submit" className="name-input-form__button" disabled={loading}>
+        {loading ? (language === 'en' ? 'Checking...' : 'తనిఖీ చేస్తోంది...') : text.button}
       </button>
     </form>
   );

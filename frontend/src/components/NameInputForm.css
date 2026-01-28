@@ -58,3 +58,13 @@
 .name-input-form__button:active:not(:disabled) {
   transform: translateY(0);
 }
+
+.name-input-form__button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.name-input-form__input:disabled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+}
