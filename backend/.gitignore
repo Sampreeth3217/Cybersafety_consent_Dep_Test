@@ -1,2 +1,6 @@
 .vercel
 .env*.local
+banker_credentials.json
+node_modules
+dist
+coverage

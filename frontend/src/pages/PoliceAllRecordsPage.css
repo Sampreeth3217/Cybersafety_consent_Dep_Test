@@ -228,6 +228,68 @@
   cursor: not-allowed;
 }
 
+/* Category Filter Section */
+.category-filter-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 2rem;
+}
+
+.category-filter-section h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #14171a;
+}
+
+.category-buttons {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.category-btn {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #e1e8ed;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  color: #657786;
+}
+
+.category-btn:hover {
+  border-color: #2d5a8a;
+  color: #2d5a8a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.category-btn.active {
+  background: #2d5a8a;
+  border-color: #2d5a8a;
+  color: white;
+}
+
+.category-btn.digital-arrest.active {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border-color: #ef4444;
+}
+
+.category-btn.investment-fraud.active {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border-color: #f59e0b;
+}
+
+.category-btn.other-cybercrimes.active {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  border-color: #8b5cf6;
+}
+
 .records-controls {
   display: flex;
   justify-content: space-between;
@@ -399,6 +461,30 @@
   color: #7b1fa2;
 }
 
+.category-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.category-badge.digital-arrest {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.category-badge.investment-fraud {
+  background: #fce4ec;
+  color: #c2185b;
+}
+
+.category-badge.other-cybercrimes {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
 .status-badge {
   display: inline-block;
   padding: 0.3rem 0.8rem;
@@ -445,6 +531,38 @@
 .pagination-info {
   font-weight: 600;
   color: #14171a;
+}
+
+.page-jump {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-input {
+  width: 80px;
+  padding: 0.6rem;
+  border: 2px solid #2d5a8a;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.page-input:focus {
+  border-color: #1e3a5f;
+  box-shadow: 0 0 0 3px rgba(45, 90, 138, 0.1);
+}
+
+.page-input::placeholder {
+  color: #999;
+  font-weight: 400;
+}
+
+.go-button {
+  min-width: 60px;
 }
 
 /* Responsive */
@@ -517,5 +635,14 @@
   .records-info {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .category-buttons {
+    flex-direction: column;
+  }
+
+  .category-btn {
+    width: 100%;
+    text-align: center;
   }
 }

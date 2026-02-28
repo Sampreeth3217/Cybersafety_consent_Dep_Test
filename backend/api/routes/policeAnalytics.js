@@ -302,6 +302,221 @@ router.get('/mule-accounts/stats', authenticatePolice, async (req, res) => {
 });
 
 /**
+ * GET /api/police/analytics/banks
+ * Get comprehensive bank analytics
+ */
+router.get('/banks', authenticatePolice, async (req, res) => {
+  try {
+    const { startDate, endDate, category } = req.query;
+    console.log('Fetching bank analytics...', { startDate, endDate, category });
+
+    // Build filter object
+    const filter = {};
+    if (startDate || endDate) {
+      filter.createdAt = {};
+      if (startDate) {
+        filter.createdAt.$gte = new Date(startDate);
+      }
+      if (endDate) {
+        const end = new Date(endDate);
+        end.setDate(end.getDate() + 1);
+        filter.createdAt.$lte = end;
+      }
+    }
+    if (category) {
+      // For digital-arrest, include old records without category
+      if (category === 'digital-arrest') {
+        filter.$or = [
+          { category: 'digital-arrest' },
+          { category: { $exists: false } },
+          { category: null },
+          { category: '' }
+        ];
+      } else {
+        filter.category = category;
+      }
+    }
+
+    // Top banks by consent records - exclude records without bank information
+    const topBanks = await ConsentRecord.aggregate([
+      { $match: filter },
+      // Filter out empty or null bank names
+      {
+        $match: {
+          bankName: { $exists: true, $ne: '', $ne: null },
+          $expr: { $gt: [{ $strLenCP: { $ifNull: ['$bankName', ''] } }, 0] }
+        }
+      },
+      {
+        $group: {
+          _id: '$bankName',
+          count: { $sum: 1 },
+          categories: { $push: '$category' }
+        }
+      },
+      { $sort: { count: -1 } },
+      { $limit: 20 }
+    ]);
+
+    // Top branches by consent records
+    const topBranches = await ConsentRecord.aggregate([
+      { $match: filter },
+      // Filter out empty or null branch names
+      {
+        $match: {
+          bankBranch: { $exists: true, $ne: '', $ne: null },
+          bankName: { $exists: true, $ne: '', $ne: null },
+          $expr: {
+            $and: [
+              { $gt: [{ $strLenCP: { $ifNull: ['$bankBranch', ''] } }, 0] },
+              { $gt: [{ $strLenCP: { $ifNull: ['$bankName', ''] } }, 0] }
+            ]
+          }
+        }
+      },
+      {
+        $group: {
+          _id: '$bankBranch',
+          count: { $sum: 1 },
+          banks: { $addToSet: '$bankName' }
+        }
+      },
+      { $sort: { count: -1 } },
+      { $limit: 20 }
+    ]);
+
+    // Bank and branch combinations
+    const bankBranchCombos = await ConsentRecord.aggregate([
+      { $match: filter },
+      // Filter out empty or null bank/branch names
+      {
+        $match: {
+          bankName: { $exists: true, $ne: '', $ne: null },
+          bankBranch: { $exists: true, $ne: '', $ne: null },
+          $expr: {
+            $and: [
+              { $gt: [{ $strLenCP: { $ifNull: ['$bankName', ''] } }, 0] },
+              { $gt: [{ $strLenCP: { $ifNull: ['$bankBranch', ''] } }, 0] }
+            ]
+          }
+        }
+      },
+      {
+        $group: {
+          _id: {
+            bank: '$bankName',
+            branch: '$bankBranch'
+          },
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { count: -1 } },
+      { $limit: 30 }
+    ]);
+
+    // Category breakdown by bank
+    const categoryByBank = await ConsentRecord.aggregate([
+      { $match: filter },
+      // Filter out empty or null bank names
+      {
+        $match: {
+          bankName: { $exists: true, $ne: '', $ne: null },
+          $expr: { $gt: [{ $strLenCP: { $ifNull: ['$bankName', ''] } }, 0] }
+        }
+      },
+      {
+        $group: {
+          _id: {
+            bank: '$bankName',
+            category: '$category'
+          },
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { '_id.bank': 1, count: -1 } }
+    ]);
+
+    // Daily trend for top 5 banks
+    const top5Banks = topBanks.slice(0, 5).map(b => b._id);
+    const dailyTrend = await ConsentRecord.aggregate([
+      { 
+        $match: { 
+          ...filter,
+          bankName: { $in: top5Banks, $ne: '', $ne: null },
+          $expr: { $gt: [{ $strLenCP: { $ifNull: ['$bankName', ''] } }, 0] }
+        } 
+      },
+      {
+        $group: {
+          _id: {
+            date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+            bank: '$bankName'
+          },
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { '_id.date': 1 } }
+    ]);
+
+    // Overall statistics - only count records with valid bank information
+    const bankFilter = {
+      ...filter,
+      bankName: { $exists: true, $ne: '', $ne: null },
+      bankBranch: { $exists: true, $ne: '', $ne: null }
+    };
+    const totalRecords = await ConsentRecord.countDocuments(bankFilter);
+    const uniqueBanks = await ConsentRecord.distinct('bankName', bankFilter);
+    const uniqueBranches = await ConsentRecord.distinct('bankBranch', bankFilter);
+
+    res.json({
+      success: true,
+      data: {
+        overview: {
+          totalRecords,
+          totalBanks: uniqueBanks.filter(b => b && b.trim()).length,
+          totalBranches: uniqueBranches.filter(b => b && b.trim()).length
+        },
+        topBanks: topBanks.map(b => ({
+          bankName: b._id,
+          count: b.count,
+          digitalArrestCount: b.categories.filter(c => c === 'digital-arrest').length,
+          investmentFraudCount: b.categories.filter(c => c === 'investment-fraud').length,
+          otherCybercrimesCount: b.categories.filter(c => c === 'other-cybercrimes').length
+        })),
+        topBranches: topBranches.map(b => ({
+          branchName: b._id,
+          count: b.count,
+          uniqueBanks: b.banks.length
+        })),
+        bankBranchCombinations: bankBranchCombos.map(c => ({
+          bankName: c._id.bank,
+          branchName: c._id.branch,
+          count: c.count
+        })),
+        categoryByBank: categoryByBank.map(c => ({
+          bankName: c._id.bank,
+          category: c._id.category,
+          count: c.count
+        })),
+        dailyTrend: dailyTrend.map(d => ({
+          date: d._id.date,
+          bankName: d._id.bank,
+          count: d.count
+        }))
+      }
+    });
+
+  } catch (error) {
+    console.error('Bank analytics error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching bank analytics',
+      error: error.message
+    });
+  }
+});
+
+/**
  * GET /api/police/all-records
  * Get all consent records with pagination
  */

@@ -85,8 +85,9 @@ router.get('/all-records', authenticatePolice, async (req, res) => {
     const skip = (page - 1) * limit;
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
+    const category = req.query.category;
 
-    console.log(`Fetching all records - page ${page}, limit ${limit}`, { startDate, endDate });
+    console.log(`Fetching all records - page ${page}, limit ${limit}`, { startDate, endDate, category });
 
     // Build filter object
     const filter = {};
@@ -102,16 +103,38 @@ router.get('/all-records', authenticatePolice, async (req, res) => {
         filter.createdAt.$lte = end;
       }
     }
+    if (category) {
+      // For digital-arrest, include old records without category
+      if (category === 'digital-arrest') {
+        filter.$or = [
+          { category: 'digital-arrest' },
+          { category: { $exists: false } },
+          { category: null },
+          { category: '' }
+        ];
+      } else {
+        filter.category = category;
+      }
+    }
 
     // Get total count
     const totalRecords = await ConsentRecord.countDocuments(filter);
     
     // Get paginated records
     const records = await ConsentRecord.find(filter)
-      .select('name mobileNumber language token createdAt')
+      .select('name mobileNumber language token category bankName bankBranch createdAt')
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
+
+    // Ensure old records without category are treated as 'digital-arrest'
+    const recordsWithCategory = records.map(record => {
+      const recordObj = record.toObject();
+      if (!recordObj.category) {
+        recordObj.category = 'digital-arrest';
+      }
+      return recordObj;
+    });
 
     const totalPages = Math.ceil(totalRecords / limit);
 
@@ -119,7 +142,7 @@ router.get('/all-records', authenticatePolice, async (req, res) => {
 
     res.json({
       success: true,
-      records,
+      records: recordsWithCategory,
       totalPages,
       pagination: {
         currentPage: page,
@@ -146,8 +169,9 @@ router.get('/all-records/csv', authenticatePolice, async (req, res) => {
   try {
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
+    const category = req.query.category;
 
-    console.log('Generating CSV export', { startDate, endDate });
+    console.log('Generating CSV export', { startDate, endDate, category });
 
     // Build filter object
     const filter = {};
@@ -163,29 +187,54 @@ router.get('/all-records/csv', authenticatePolice, async (req, res) => {
         filter.createdAt.$lte = end;
       }
     }
+    if (category) {
+      // For digital-arrest, include old records without category
+      if (category === 'digital-arrest') {
+        filter.$or = [
+          { category: 'digital-arrest' },
+          { category: { $exists: false } },
+          { category: null },
+          { category: '' }
+        ];
+      } else {
+        filter.category = category;
+      }
+    }
 
     // Get all records matching the filter
     const records = await ConsentRecord.find(filter)
-      .select('name mobileNumber language token createdAt')
+      .select('name mobileNumber language token category bankName bankBranch createdAt')
       .sort({ createdAt: -1 });
 
     console.log(`Exporting ${records.length} records to CSV`);
 
+    // Category display names
+    const categoryNames = {
+      'digital-arrest': 'Digital Arrest',
+      'investment-fraud': 'Investment Fraud',
+      'other-cybercrimes': 'Other Cybercrimes'
+    };
+
     // Generate CSV header
-    let csv = 'S.No,Token,Name,Mobile Number,Language,Created At\n';
+    let csv = 'S.No,Token,Name,Mobile Number,Language,Category,Bank Name,Branch,Created At\n';
 
     // Add records to CSV
     records.forEach((record, index) => {
       const createdAt = new Date(record.createdAt).toLocaleString('en-IN');
       const language = record.language === 'en' ? 'English' : 'Telugu';
       const mobile = record.mobileNumber || 'N/A';
+      const category = categoryNames[record.category] || record.category || 'Digital Arrest';
+      const bankName = record.bankName || 'N/A';
+      const bankBranch = record.bankBranch || 'N/A';
       
       // Escape fields that may contain commas or quotes
       const token = `"${record.token}"`;
       const name = `"${record.name.replace(/"/g, '""')}"`;
       const mobileEscaped = `"${mobile}"`;
+      const bankNameEscaped = `"${bankName.replace(/"/g, '""')}"`;
+      const bankBranchEscaped = `"${bankBranch.replace(/"/g, '""')}"`;
       
-      csv += `${index + 1},${token},${name},${mobileEscaped},${language},"${createdAt}"\n`;
+      csv += `${index + 1},${token},${name},${mobileEscaped},${language},"${category}",${bankNameEscaped},${bankBranchEscaped},"${createdAt}"\n`;
     });
 
     // Set headers for CSV download

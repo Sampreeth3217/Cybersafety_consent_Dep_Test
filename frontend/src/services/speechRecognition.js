@@ -133,11 +133,12 @@ export const useSpeechRecognition = (language = 'en') => {
       
       switch (event.error) {
         case 'no-speech':
-          // On Android, auto-restart after no-speech
+          // Auto-restart on no-speech - don't show error
           if (isAndroid) {
             console.log('No speech detected, will auto-restart');
           } else {
-            setError('No speech detected. Please try again.');
+            console.log('No speech detected, will auto-restart');
+            // Don't show error, just auto-restart
           }
           break;
         case 'audio-capture':

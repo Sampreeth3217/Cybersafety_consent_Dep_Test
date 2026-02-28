@@ -17,8 +17,7 @@ const ConsentRecordSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Token is required'],
     unique: true,
-    length: [7, 'Token must be exactly 7 characters'],
-    match: [/^[A-Z0-9]{7}$/, 'Token must be 7 alphanumeric characters']
+    minlength: [7, 'Token must be at least 7 characters']
   },
   language: {
     type: String,
@@ -27,6 +26,25 @@ const ConsentRecordSchema = new mongoose.Schema({
       values: ['en', 'te'],
       message: 'Language must be either "en" or "te"'
     }
+  },
+  category: {
+    type: String,
+    required: false,
+    enum: {
+      values: ['digital-arrest', 'investment-fraud', 'other-cybercrimes'],
+      message: 'Category must be one of: digital-arrest, investment-fraud, other-cybercrimes'
+    },
+    default: 'digital-arrest'
+  },
+  bankName: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  bankBranch: {
+    type: String,
+    trim: true,
+    default: ''
   },
   createdAt: {
     type: Date,
@@ -38,10 +56,10 @@ const ConsentRecordSchema = new mongoose.Schema({
   }
 });
 
-// Index on token for fast lookups
-ConsentRecordSchema.index({ token: 1 });
-// Index on mobile number for duplicate checking
-ConsentRecordSchema.index({ mobileNumber: 1 });
+// Index on mobile number and category for duplicate checking
+ConsentRecordSchema.index({ mobileNumber: 1, category: 1 });
+// Index on category for filtering
+ConsentRecordSchema.index({ category: 1 });
 
 // Update the updatedAt field on save
 ConsentRecordSchema.pre('save', function(next) {

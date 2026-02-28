@@ -17,16 +17,27 @@
   margin-bottom: var(--spacing-lg);
 }
 
-.name-input-form__input {
+.name-input-form__label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.name-input-form__input,
+.name-input-form__select {
   width: 100%;
   padding: var(--spacing-md) var(--spacing-lg);
   font-size: 1.1rem;
   border: 2px solid var(--border-color);
   border-radius: var(--radius-md);
   transition: border-color var(--transition-base);
+  background-color: white;
 }
 
-.name-input-form__input:focus {
+.name-input-form__input:focus,
+.name-input-form__select:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
@@ -64,7 +75,8 @@
   cursor: not-allowed;
 }
 
-.name-input-form__input:disabled {
+.name-input-form__input:disabled,
+.name-input-form__select:disabled {
   background-color: #f3f4f6;
   cursor: not-allowed;
 }

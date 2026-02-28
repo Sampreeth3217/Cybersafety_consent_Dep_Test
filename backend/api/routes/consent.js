@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
  */
 router.post('/check', async (req, res) => {
   try {
-    const { mobileNumber } = req.body;
+    const { mobileNumber, category } = req.body;
 
     // Validate mobile number
     if (!mobileNumber || !/^[6-9]\d{9}$/.test(mobileNumber)) {
@@ -32,8 +32,13 @@ router.post('/check', async (req, res) => {
       });
     }
 
-    // Check if record exists
-    const existingRecord = await ConsentRecord.findOne({ mobileNumber });
+    // Check if record exists for this category
+    const query = { mobileNumber };
+    if (category) {
+      query.category = category;
+    }
+    
+    const existingRecord = await ConsentRecord.findOne(query);
     
     if (existingRecord) {
       return res.json({
@@ -42,6 +47,9 @@ router.post('/check', async (req, res) => {
         data: {
           token: existingRecord.token,
           name: existingRecord.name,
+          category: existingRecord.category,
+          bankName: existingRecord.bankName,
+          bankBranch: existingRecord.bankBranch,
           createdAt: existingRecord.createdAt
         }
       });
@@ -72,7 +80,7 @@ router.post('/', async (req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   
   try {
-    const { name, mobileNumber, token, language } = req.body;
+    const { name, mobileNumber, token, language, category, bankName, bankBranch } = req.body;
 
     // Validate inputs
     if (!validateName(name)) {
@@ -89,10 +97,11 @@ router.post('/', async (req, res) => {
       });
     }
 
-    if (!validateToken(token)) {
+    // Validate token with new format (prefix + 7 chars)
+    if (!token || !/^[DIO]-[A-Z0-9]{7}$/.test(token)) {
       return res.status(400).json({
         success: false,
-        message: 'Invalid token. Token must be exactly 7 alphanumeric characters.'
+        message: 'Invalid token. Token must be in format: D-/I-/O- followed by 7 alphanumeric characters.'
       });
     }
 
@@ -103,11 +112,21 @@ router.post('/', async (req, res) => {
       });
     }
 
+    // Validate category
+    const validCategories = ['digital-arrest', 'investment-fraud', 'other-cybercrimes'];
+    const consentCategory = category || 'digital-arrest';
+    if (!validCategories.includes(consentCategory)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid category. Must be one of: digital-arrest, investment-fraud, other-cybercrimes'
+      });
+    }
+
     // Sanitize inputs
     const sanitizedName = sanitizeInput(name);
 
     // Check if token already exists
-    const existingRecord = await ConsentRecord.findOne({ token });
+    const existingRecord = await ConsentRecord.findOne({ token: token.toUpperCase() });
     if (existingRecord) {
       return res.status(409).json({
         success: false,
@@ -115,14 +134,18 @@ router.post('/', async (req, res) => {
       });
     }
 
-    // Check if mobile number already has a record
-    const existingMobile = await ConsentRecord.findOne({ mobileNumber });
+    // Check if mobile number already has a record for this category
+    const existingMobile = await ConsentRecord.findOne({ 
+      mobileNumber, 
+      category: consentCategory 
+    });
     if (existingMobile) {
       return res.status(409).json({
         success: false,
-        message: 'A consent record already exists for this mobile number.',
+        message: `A consent record already exists for this mobile number in the ${consentCategory} category.`,
         data: {
-          token: existingMobile.token
+          token: existingMobile.token,
+          category: existingMobile.category
         }
       });
     }
@@ -132,7 +155,10 @@ router.post('/', async (req, res) => {
       name: sanitizedName,
       mobileNumber,
       token: token.toUpperCase(),
-      language
+      language,
+      category: consentCategory,
+      bankName: bankName || '',
+      bankBranch: bankBranch || ''
     });
 
     await consentRecord.save();
@@ -146,6 +172,9 @@ router.post('/', async (req, res) => {
         token: consentRecord.token,
         name: consentRecord.name,
         language: consentRecord.language,
+        category: consentRecord.category,
+        bankName: consentRecord.bankName,
+        bankBranch: consentRecord.bankBranch,
         createdAt: consentRecord.createdAt
       }
     });

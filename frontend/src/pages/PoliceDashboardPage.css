@@ -337,6 +337,14 @@
   background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
 }
 
+.action-card.analytics-card {
+  border-color: #8b5cf6;
+}
+
+.action-card.analytics-card:hover {
+  background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+}
+
 .action-card.records-card {
   border-color: #2d5a8a;
 }

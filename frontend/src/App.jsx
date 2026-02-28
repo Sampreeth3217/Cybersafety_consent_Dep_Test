@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import MainLandingPage from './pages/MainLandingPage';
+import ConsentCategorySelectionPage from './pages/ConsentCategorySelectionPage';
 import CybersafetyConsentPage from './pages/CybersafetyConsentPage';
 import ConsentFlowPage from './pages/ConsentFlowPage';
 import ConfirmationPage from './pages/ConfirmationPage';
@@ -15,6 +16,7 @@ import PoliceLoginPage from './pages/PoliceLoginPage';
 import PoliceDashboardPage from './pages/PoliceDashboardPage';
 import PoliceMuleAccountsPage from './pages/PoliceMuleAccountsPage';
 import PoliceAllRecordsPage from './pages/PoliceAllRecordsPage';
+import BankAnalyticsPage from './pages/BankAnalyticsPage';
 import { ROUTES } from './config/constants';
 import './App.css';
 
@@ -30,8 +32,11 @@ function App() {
           {/* Main Landing Page */}
           <Route path={ROUTES.HOME} element={<MainLandingPage />} />
           
+          {/* Consent Category Selection */}
+          <Route path={ROUTES.CYBERSAFETY_CONSENT} element={<ConsentCategorySelectionPage />} />
+          
           {/* CyberSuraksha App Routes */}
-          <Route path={ROUTES.CYBERSAFETY_CONSENT} element={<CybersafetyConsentPage />} />
+          <Route path="/cybersuraksha/consent-form" element={<CybersafetyConsentPage />} />
           <Route path={ROUTES.CONSENT_FLOW} element={<ConsentFlowPage />} />
           <Route path={ROUTES.CONFIRMATION} element={<ConfirmationPage />} />
           
@@ -49,6 +54,7 @@ function App() {
           <Route path="/cybersuraksha/police" element={<PoliceLoginPage />} />
           <Route path="/cybersuraksha/police/dashboard" element={<PoliceDashboardPage />} />
           <Route path="/cybersuraksha/police/all-records" element={<PoliceAllRecordsPage />} />
+          <Route path="/cybersuraksha/police/bank-analytics" element={<BankAnalyticsPage />} />
           <Route path="/cybersuraksha/police/mule-accounts" element={<PoliceMuleAccountsPage />} />
           
           {/* Cybercrime Categories Page (old) */}

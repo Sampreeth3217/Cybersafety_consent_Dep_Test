@@ -1,9 +1,11 @@
 import { TOKEN_LENGTH } from '../config/constants';
 
 /**
- * Generate a random 7-character alphanumeric token
+ * Generate a random 7-character alphanumeric token with category prefix
+ * @param {string} category - The consent category ('digital-arrest', 'investment-fraud', 'other-cybercrimes')
+ * @returns {string} Token with prefix (D-, I-, or O-) followed by 7 characters
  */
-export const generateToken = () => {
+export const generateToken = (category = 'digital-arrest') => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let token = '';
   
@@ -12,7 +14,41 @@ export const generateToken = () => {
     token += characters[randomIndex];
   }
   
-  return token;
+  // Add category prefix
+  const prefix = getCategoryPrefix(category);
+  return `${prefix}${token}`;
+};
+
+/**
+ * Get token prefix for category
+ * @param {string} category - The consent category
+ * @returns {string} The prefix (D-, I-, or O-)
+ */
+export const getCategoryPrefix = (category) => {
+  const prefixes = {
+    'digital-arrest': 'D-',
+    'investment-fraud': 'I-',
+    'other-cybercrimes': 'O-'
+  };
+  return prefixes[category] || 'D-';
+};
+
+/**
+ * Extract category from token prefix
+ * @param {string} token - The token with prefix
+ * @returns {string} The category
+ */
+export const getCategoryFromToken = (token) => {
+  if (!token) return 'digital-arrest';
+  
+  const prefix = token.substring(0, 2);
+  const categories = {
+    'D-': 'digital-arrest',
+    'I-': 'investment-fraud',
+    'O-': 'other-cybercrimes'
+  };
+  
+  return categories[prefix] || 'digital-arrest';
 };
 
 /**
@@ -51,14 +87,16 @@ export const formatDateTelugu = (date) => {
 
 /**
  * Validate token format
+ * Accepts both new format (D-/I-/O-XXXXXXX) and legacy format (XXXXXXX)
  */
 export const isValidToken = (token) => {
   if (!token || typeof token !== 'string') {
     return false;
   }
   
-  const tokenRegex = /^[A-Z0-9]{7}$/;
-  return tokenRegex.test(token);
+  const newTokenRegex = /^[DIO]-[A-Z0-9]{7}$/;
+  const legacyTokenRegex = /^[A-Z0-9]{7}$/;
+  return newTokenRegex.test(token) || legacyTokenRegex.test(token);
 };
 
 /**

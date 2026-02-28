@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LanguageSelector from '../components/LanguageSelector';
 import NameInputForm from '../components/NameInputForm';
 import { LANGUAGES, ROUTES } from '../config/constants';
 import { generateToken } from '../utils/helpers';
+import { getCategoryName } from '../config/statements';
 import './CybersafetyConsentPage.css';
 
 /**
@@ -15,51 +16,86 @@ const CybersafetyConsentPage = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [showNameForm, setShowNameForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [category, setCategory] = useState('digital-arrest');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Get category from sessionStorage
+    const storedCategory = sessionStorage.getItem('consentCategory');
+    if (storedCategory) {
+      setCategory(storedCategory);
+    } else {
+      // If no category selected, redirect to category selection
+      navigate(ROUTES.CYBERSAFETY_CONSENT);
+    }
+  }, [navigate]);
 
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
     setShowNameForm(true);
   };
 
-  const handleNameSubmit = async (name, mobileNumber) => {
-    console.log('CybersafetyConsentPage handleNameSubmit called with:', { name, mobileNumber });
+  const handleNameSubmit = async (name, mobileNumber, bankName, bankBranch) => {
+    console.log('CybersafetyConsentPage handleNameSubmit called with:', { name, mobileNumber, bankName, bankBranch, category });
     setLoading(true);
     
     try {
-      // Check if mobile number already has a consent record
+      // Check if mobile number already has a consent record for this category
       const checkResponse = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/consent/check`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ mobileNumber })
+        body: JSON.stringify({ mobileNumber, category })
       });
 
       const checkData = await checkResponse.json();
 
       if (checkData.success && checkData.exists) {
-        // Navigate to confirmation page with existing token data
-        sessionStorage.setItem('consentData', JSON.stringify({
-          name: checkData.data.name,
-          mobileNumber,
-          language: selectedLanguage,
-          token: checkData.data.token,
-          isExisting: true
-        }));
-        navigate(ROUTES.CONFIRMATION);
-        return;
+        // Verify the token prefix matches the current category
+        const token = checkData.data.token;
+        const categoryPrefixes = {
+          'digital-arrest': 'D-',
+          'investment-fraud': 'I-',
+          'other-cybercrimes': 'O-'
+        };
+        
+        const expectedPrefix = categoryPrefixes[category];
+        const hasCorrectPrefix = token && token.startsWith(expectedPrefix);
+        
+        // Only treat as existing if token has the correct prefix for this category
+        if (hasCorrectPrefix) {
+          // Navigate to confirmation page with existing token data
+          sessionStorage.setItem('consentData', JSON.stringify({
+            name: checkData.data.name,
+            mobileNumber,
+            bankName: checkData.data.bankName || bankName,
+            bankBranch: checkData.data.bankBranch || bankBranch,
+            language: selectedLanguage,
+            token: checkData.data.token,
+            category: category,
+            isExisting: true
+          }));
+          navigate(ROUTES.CONFIRMATION);
+          return;
+        }
+        // If prefix doesn't match, proceed to create new consent for this category
       }
 
-      // Generate unique token
-      const token = generateToken();
+      // Generate unique token with category prefix
+      const token = generateToken(category);
+      
+      console.log('Generated token:', token, 'for category:', category);
 
       // Store data in sessionStorage
       const dataToStore = {
         name,
         mobileNumber,
+        bankName,
+        bankBranch,
         language: selectedLanguage,
         token,
+        category,
         currentStatementIndex: 0
       };
       

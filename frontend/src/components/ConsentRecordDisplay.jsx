@@ -47,6 +47,13 @@ const ConsentRecordDisplay = ({ record, onClose }) => {
         </div>
 
         <div className="consent-record-display__field">
+          <label className="consent-record-display__label">Category</label>
+          <p className="consent-record-display__value">
+            {record.category || 'Digital Arrest'}
+          </p>
+        </div>
+
+        <div className="consent-record-display__field">
           <label className="consent-record-display__label">Created At</label>
           <p className="consent-record-display__value">
             {formatDate(record.createdAt)}

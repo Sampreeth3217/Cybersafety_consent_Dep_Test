@@ -23,7 +23,7 @@ const ManagerSearchForm = ({ onSearch, onLogout }) => {
     }
 
     if (!isValidToken(upperToken)) {
-      setError('Invalid token format. Token must be 7 alphanumeric characters.');
+      setError('Invalid token format. Enter legacy 7-character token or new format (D-/I-/O-XXXXXXX).');
       return;
     }
 
@@ -38,8 +38,8 @@ const ManagerSearchForm = ({ onSearch, onLogout }) => {
   };
 
   const handleTokenChange = (e) => {
-    // Convert to uppercase and limit to 7 characters
-    const value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').substring(0, 7);
+    // Convert to uppercase and limit to 9 characters (prefix + 7 chars)
+    const value = e.target.value.toUpperCase().replace(/[^A-Z0-9-]/g, '').substring(0, 9);
     setToken(value);
     setError('');
   };
@@ -53,15 +53,15 @@ const ManagerSearchForm = ({ onSearch, onLogout }) => {
       <form onSubmit={handleSubmit} className="manager-search-form__form">
         <div className="manager-search-form__field">
           <label className="manager-search-form__label">
-            Enter 7-character Token
+            Enter Token
           </label>
           <input
             type="text"
             className="manager-search-form__input"
             value={token}
             onChange={handleTokenChange}
-            placeholder="e.g., A9X2KQ7"
-            maxLength={7}
+            placeholder="e.g., D-A9X2KQ7 or A9X2KQ7"
+            maxLength={9}
             disabled={isLoading}
             autoFocus
           />
@@ -73,7 +73,7 @@ const ManagerSearchForm = ({ onSearch, onLogout }) => {
         <button
           type="submit"
           className="manager-search-form__button"
-          disabled={isLoading || token.length !== 7}
+          disabled={isLoading || (token.length !== 7 && token.length !== 9)}
         >
           {isLoading ? 'Searching...' : 'Search'}
         </button>

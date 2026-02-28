@@ -33,9 +33,6 @@ const bankerSchema = new mongoose.Schema({
   }
 });
 
-// Index for faster queries
-bankerSchema.index({ ifscCode: 1 });
-
 const Banker = mongoose.model('Banker', bankerSchema);
 
 export default Banker;

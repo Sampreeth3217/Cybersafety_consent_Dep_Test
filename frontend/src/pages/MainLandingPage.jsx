@@ -63,7 +63,7 @@ const MainLandingPage = () => {
               className="main-landing-page__card-button"
               onClick={() => handleProjectClick(ROUTES.CYBERSAFETY_CONSENT)}
             >
-              Digital Consent form for Bank customers
+              Forms for Citizens
             </button>
           </div>
           

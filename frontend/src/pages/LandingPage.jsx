@@ -24,8 +24,8 @@ const LandingPage = () => {
     setShowNameForm(true);
   };
 
-  const handleNameSubmit = async (name, mobileNumber) => {
-    console.log('handleNameSubmit called with:', { name, mobileNumber });
+  const handleNameSubmit = async (name, mobileNumber, bankName, bankBranch) => {
+    console.log('handleNameSubmit called with:', { name, mobileNumber, bankName, bankBranch });
     setLoading(true);
 
     try {
@@ -45,6 +45,8 @@ const LandingPage = () => {
         sessionStorage.setItem('consentData', JSON.stringify({
           name: checkData.data.name,
           mobileNumber,
+          bankName: checkData.data.bankName || bankName,
+          bankBranch: checkData.data.bankBranch || bankBranch,
           language: selectedLanguage,
           token: checkData.data.token,
           isExisting: true
@@ -60,6 +62,8 @@ const LandingPage = () => {
       const dataToStore = {
         name,
         mobileNumber,
+        bankName,
+        bankBranch,
         language: selectedLanguage,
         token,
         currentStatementIndex: 0

@@ -11,9 +11,11 @@ const PoliceAllRecordsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(''); // '' for all, 'digital-arrest', 'investment-fraud', 'other-cybercrimes'
   const [filterApplied, setFilterApplied] = useState(false);
   const [totalRecords, setTotalRecords] = useState(0);
   const [downloadLoading, setDownloadLoading] = useState(false);
+  const [pageInput, setPageInput] = useState('');
   const recordsPerPage = 50;
 
   const checkAuthentication = useCallback(async () => {
@@ -56,6 +58,9 @@ const PoliceAllRecordsPage = () => {
       if (endDate) {
         url += `&endDate=${endDate}`;
       }
+      if (selectedCategory) {
+        url += `&category=${selectedCategory}`;
+      }
 
       const response = await fetch(url, {
         headers: { 'Authorization': `Bearer ${token}` }
@@ -72,7 +77,7 @@ const PoliceAllRecordsPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [currentPage, startDate, endDate]);
+  }, [currentPage, startDate, endDate, selectedCategory]);
 
   useEffect(() => {
     checkAuthentication().then(isAuth => {
@@ -94,14 +99,44 @@ const PoliceAllRecordsPage = () => {
 
   const handleApplyFilter = () => {
     setCurrentPage(1);
-    setFilterApplied(startDate !== '' || endDate !== '');
+    setFilterApplied(startDate !== '' || endDate !== '' || selectedCategory !== '');
   };
 
   const handleClearFilter = () => {
     setStartDate('');
     setEndDate('');
+    setSelectedCategory('');
     setCurrentPage(1);
     setFilterApplied(false);
+  };
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
+
+  const handlePageInputChange = (e) => {
+    const value = e.target.value;
+    // Only allow numbers
+    if (value === '' || /^\d+$/.test(value)) {
+      setPageInput(value);
+    }
+  };
+
+  const handleGoToPage = () => {
+    const pageNum = parseInt(pageInput);
+    if (pageNum >= 1 && pageNum <= totalPages) {
+      setCurrentPage(pageNum);
+      setPageInput('');
+    } else {
+      alert(`Please enter a page number between 1 and ${totalPages}`);
+    }
+  };
+
+  const handlePageInputKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleGoToPage();
+    }
   };
 
   const downloadCSV = async (type) => {
@@ -118,6 +153,9 @@ const PoliceAllRecordsPage = () => {
         }
         if (endDate) {
           url += `${startDate ? '&' : '?'}endDate=${endDate}`;
+        }
+        if (selectedCategory) {
+          url += `${startDate || endDate ? '&' : '?'}category=${selectedCategory}`;
         }
       }
 
@@ -246,6 +284,37 @@ const PoliceAllRecordsPage = () => {
           </div>
         </div>
 
+        {/* Category Filter Buttons */}
+        <div className="category-filter-section">
+          <h3>Filter by Category</h3>
+          <div className="category-buttons">
+            <button
+              className={`category-btn ${selectedCategory === '' ? 'active' : ''}`}
+              onClick={() => handleCategoryChange('')}
+            >
+              All
+            </button>
+            <button
+              className={`category-btn digital-arrest ${selectedCategory === 'digital-arrest' ? 'active' : ''}`}
+              onClick={() => handleCategoryChange('digital-arrest')}
+            >
+              Digital Arrest
+            </button>
+            <button
+              className={`category-btn investment-fraud ${selectedCategory === 'investment-fraud' ? 'active' : ''}`}
+              onClick={() => handleCategoryChange('investment-fraud')}
+            >
+              Investment Fraud
+            </button>
+            <button
+              className={`category-btn other-cybercrimes ${selectedCategory === 'other-cybercrimes' ? 'active' : ''}`}
+              onClick={() => handleCategoryChange('other-cybercrimes')}
+            >
+              Other Cybercrimes
+            </button>
+          </div>
+        </div>
+
         {/* Search and Info Section */}
         <div className="records-controls">
           <div className="search-box">
@@ -283,31 +352,50 @@ const PoliceAllRecordsPage = () => {
                     <th>Token</th>
                     <th>Name</th>
                     <th>Mobile Number</th>
+                    <th>Bank Name</th>
+                    <th>Branch</th>
                     <th>Language</th>
+                    <th>Category</th>
                     <th>Created At</th>
                     <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredRecords.map((record, index) => (
-                    <tr key={record._id}>
-                      <td>{(currentPage - 1) * recordsPerPage + index + 1}</td>
-                      <td className="token-cell">{record.token}</td>
-                      <td>{record.name}</td>
-                      <td className="mobile-cell">{record.mobileNumber || 'N/A'}</td>
-                      <td>
-                        <span className={`language-badge ${record.language}`}>
-                          {record.language === 'en' ? 'English' : 'Telugu'}
-                        </span>
-                      </td>
-                      <td className="date-cell">{formatDate(record.createdAt)}</td>
-                      <td>
-                        <span className="status-badge verified">
-                          ✓ Verified
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
+                  {filteredRecords.map((record, index) => {
+                    const categoryNames = {
+                      'digital-arrest': 'Digital Arrest',
+                      'investment-fraud': 'Investment Fraud',
+                      'other-cybercrimes': 'Other Cybercrimes'
+                    };
+                    const categoryDisplay = categoryNames[record.category] || 'Digital Arrest';
+                    
+                    return (
+                      <tr key={record._id}>
+                        <td>{(currentPage - 1) * recordsPerPage + index + 1}</td>
+                        <td className="token-cell">{record.token}</td>
+                        <td>{record.name}</td>
+                        <td className="mobile-cell">{record.mobileNumber || 'N/A'}</td>
+                        <td>{record.bankName || 'N/A'}</td>
+                        <td>{record.bankBranch || 'N/A'}</td>
+                        <td>
+                          <span className={`language-badge ${record.language}`}>
+                            {record.language === 'en' ? 'English' : 'Telugu'}
+                          </span>
+                        </td>
+                        <td>
+                          <span className={`category-badge ${record.category || 'digital-arrest'}`}>
+                            {categoryDisplay}
+                          </span>
+                        </td>
+                        <td className="date-cell">{formatDate(record.createdAt)}</td>
+                        <td>
+                          <span className="status-badge verified">
+                            ✓ Verified
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -331,6 +419,23 @@ const PoliceAllRecordsPage = () => {
                 >
                   Next →
                 </button>
+                <div className="page-jump">
+                  <input
+                    type="text"
+                    placeholder="Page"
+                    value={pageInput}
+                    onChange={handlePageInputChange}
+                    onKeyPress={handlePageInputKeyPress}
+                    className="page-input"
+                  />
+                  <button
+                    onClick={handleGoToPage}
+                    disabled={!pageInput}
+                    className="pagination-button go-button"
+                  >
+                    Go
+                  </button>
+                </div>
               </div>
             )}
           </>

@@ -45,7 +45,7 @@ const ConsentFlowPage = () => {
       }
       
       setConsentData(data);
-      setStatements(getStatements(data.language));
+      setStatements(getStatements(data.language, data.category || 'digital-arrest'));
       setCurrentIndex(data.currentStatementIndex || 0);
     } catch (err) {
       console.error('Error loading consent data:', err);
@@ -83,7 +83,10 @@ const ConsentFlowPage = () => {
         name: consentData.name,
         mobileNumber: consentData.mobileNumber,
         token: consentData.token,
-        language: consentData.language
+        language: consentData.language,
+        category: consentData.category || 'digital-arrest',
+        bankName: consentData.bankName || '',
+        bankBranch: consentData.bankBranch || ''
       });
 
       if (response.success) {
@@ -93,12 +96,18 @@ const ConsentFlowPage = () => {
             name: consentData.name,
             mobileNumber: consentData.mobileNumber,
             token: consentData.token,
-            language: consentData.language
+            language: consentData.language,
+            category: consentData.category || 'digital-arrest',
+            bankName: consentData.bankName || '',
+            bankBranch: consentData.bankBranch || ''
           }
         });
       }
     } catch (err) {
       console.error('Error submitting consent:', err);
+      console.error('Error message:', err.message);
+      console.error('Error status:', err.status);
+      console.error('Error data:', err.data);
       setError(err.message || ERROR_MESSAGES[consentData.language].serverError);
       setIsSubmitting(false);
     }

@@ -97,18 +97,21 @@ router.get('/consent/:token', async (req, res) => {
   try {
     const { token } = req.params;
 
-    // Validate token format
-    if (!validateToken(token)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid token format. Token must be exactly 7 alphanumeric characters.'
-      });
+    // Validate token format (now supports D-, I-, O- prefixes)
+    if (!token || !/^[DIO]-[A-Z0-9]{7}$/.test(token)) {
+      // Also check for old format tokens (backward compatibility)
+      if (!/^[A-Z0-9]{7}$/.test(token)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid token format. Token must be in format: D-/I-/O- followed by 7 alphanumeric characters, or 7 alphanumeric characters for legacy tokens.'
+        });
+      }
     }
 
     // Lookup consent record
     const record = await ConsentRecord.findOne({ 
       token: token.toUpperCase() 
-    }).select('name token language createdAt');
+    }).select('name token language category createdAt');
 
     if (!record) {
       return res.status(404).json({
@@ -117,6 +120,13 @@ router.get('/consent/:token', async (req, res) => {
       });
     }
 
+    // Get category display name
+    const categoryNames = {
+      'digital-arrest': 'Digital Arrest',
+      'investment-fraud': 'Investment Fraud',
+      'other-cybercrimes': 'Other Cybercrimes'
+    };
+
     res.json({
       success: true,
       data: {
@@ -124,6 +134,8 @@ router.get('/consent/:token', async (req, res) => {
         token: record.token,
         language: record.language === 'en' ? 'English' : 'Telugu',
         languageCode: record.language,
+        category: categoryNames[record.category] || record.category,
+        categoryCode: record.category,
         createdAt: record.createdAt
       }
     });

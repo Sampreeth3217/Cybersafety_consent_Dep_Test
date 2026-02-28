@@ -343,6 +343,14 @@ const PoliceDashboardPage = () => {
             <p>View all consent records in detail</p>
           </div>
           <div 
+            className="action-card analytics-card"
+            onClick={() => navigate('/cybersuraksha/police/bank-analytics')}
+          >
+            <div className="card-icon">📊</div>
+            <h2>Bank Analytics</h2>
+            <p>Comprehensive bank performance analysis</p>
+          </div>
+          <div 
             className="action-card mule-card"
             onClick={() => navigate('/cybersuraksha/police/mule-accounts')}
           >
